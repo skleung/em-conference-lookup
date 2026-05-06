@@ -1,5 +1,6 @@
-# Local data source — not committed (attendance.json is the generated output)
+# Local working copy of the Smartsheet export — commit to data/source.xlsx instead
 *.xlsx
+!data/source.xlsx
 
 # macOS
 .DS_Store

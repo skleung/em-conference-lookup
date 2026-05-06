@@ -1,15 +1,25 @@
 name: Update attendance data
 
+# Trigger options (in priority order):
+#
+# 1. Push a new XLSX to data/source.xlsx — Actions auto-converts it (no API key needed)
+# 2. workflow_dispatch — manual trigger; uses Smartsheet API if secrets are set,
+#    otherwise falls back to data/source.xlsx if present
+# 3. Weekly schedule — same logic as workflow_dispatch
+
 on:
+  push:
+    paths:
+      - 'data/source.xlsx'   # commit a fresh export here to trigger conversion
   schedule:
-    - cron: '0 6 * * 3'   # Wednesdays at 6am UTC (after typical Tuesday sheet updates)
-  workflow_dispatch:        # allow manual trigger from GitHub Actions UI
+    - cron: '0 6 * * 3'      # Wednesdays at 6am UTC
+  workflow_dispatch:           # allow manual trigger from GitHub Actions UI
 
 jobs:
   update:
     runs-on: ubuntu-latest
     permissions:
-      contents: write       # needed to commit data/attendance.json back to the repo
+      contents: write
 
     steps:
       - uses: actions/checkout@v4
@@ -21,11 +31,24 @@ jobs:
       - name: Install dependencies
         run: pip install requests openpyxl
 
-      - name: Fetch Smartsheet and generate attendance.json
-        run: python scripts/fetch_smartsheet.py
+      - name: Generate attendance.json
+        run: |
+          if [ -n "$SMARTSHEET_API_KEY" ] && [ -n "$SMARTSHEET_SHEET_ID" ]; then
+            echo "Using Smartsheet API…"
+            python scripts/fetch_smartsheet.py
+          elif [ -f data/source.xlsx ]; then
+            echo "Using committed XLSX (data/source.xlsx)…"
+            python scripts/fetch_smartsheet.py --from-xlsx --xlsx-path data/source.xlsx
+          else
+            echo "No API credentials and no data/source.xlsx found. Skipping."
+            exit 0
+          fi
         env:
           SMARTSHEET_API_KEY: ${{ secrets.SMARTSHEET_API_KEY }}
           SMARTSHEET_SHEET_ID: ${{ secrets.SMARTSHEET_SHEET_ID }}
+
+      - name: Validate generated data
+        run: python scripts/validate_data.py
 
       - name: Commit updated data
         run: |

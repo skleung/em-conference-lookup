@@ -15,7 +15,7 @@ from pathlib import Path
 from typing import Optional
 
 ROOT = Path(__file__).parent.parent
-XLSX_PATH = ROOT / "Resident Attendance View AY'25-'26.xlsx"
+DEFAULT_XLSX_PATH = ROOT / "Resident Attendance View AY'25-'26.xlsx"
 OUT_PATH = ROOT / "data" / "attendance.json"
 
 MAX_ASYNC_HOURS = 18.5
@@ -73,13 +73,16 @@ def normalize_session_value(val):
         return s
 
 
-def from_xlsx() -> dict:
+def from_xlsx(xlsx_path: Optional[Path] = None) -> dict:
     try:
         import openpyxl
     except ImportError:
         sys.exit("openpyxl is required: pip install openpyxl")
 
-    wb = openpyxl.load_workbook(str(XLSX_PATH), data_only=True)
+    path = xlsx_path or DEFAULT_XLSX_PATH
+    if not path.exists():
+        sys.exit(f"XLSX file not found: {path}")
+    wb = openpyxl.load_workbook(str(path), data_only=True)
     ws = wb.active
     rows = list(ws.iter_rows(values_only=True))
 
@@ -257,10 +260,15 @@ def from_api() -> dict:
 def main():
     parser = argparse.ArgumentParser(description="Generate attendance.json")
     parser.add_argument("--from-xlsx", action="store_true", help="Parse local XLSX instead of Smartsheet API")
+    parser.add_argument("--xlsx-path", type=Path, default=None, help="Path to XLSX file (default: repo-root XLSX)")
     args = parser.parse_args()
 
-    print(f"Mode: {'XLSX' if args.from_xlsx else 'Smartsheet API'}")
-    data = from_xlsx() if args.from_xlsx else from_api()
+    if args.from_xlsx or args.xlsx_path:
+        print(f"Mode: XLSX ({args.xlsx_path or DEFAULT_XLSX_PATH})")
+        data = from_xlsx(args.xlsx_path)
+    else:
+        print("Mode: Smartsheet API")
+        data = from_api()
 
     OUT_PATH.parent.mkdir(parents=True, exist_ok=True)
     OUT_PATH.write_text(json.dumps(data, indent=2))
