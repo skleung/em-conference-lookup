@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EM Residency — Conference Attendance</title>
+  <style>
+    :root {
+      --bg: #f4f6f9;
+      --surface: #ffffff;
+      --border: #e2e8f0;
+      --text: #1a202c;
+      --muted: #718096;
+      --primary: #2b6cb0;
+      --primary-light: #ebf4ff;
+      --green: #276749;
+      --green-bg: #f0fff4;
+      --green-bar: #48bb78;
+      --yellow: #744210;
+      --yellow-bg: #fffff0;
+      --yellow-bar: #ecc94b;
+      --red: #742a2a;
+      --red-bg: #fff5f5;
+      --red-bar: #fc8181;
+      --radius: 10px;
+      --shadow: 0 1px 3px rgba(0,0,0,.08), 0 1px 2px rgba(0,0,0,.04);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    /* ── Header ─────────────────────────────────────── */
+    header {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 14px 24px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    header h1 { font-size: 1.05rem; font-weight: 600; color: var(--primary); }
+    header .sub { font-size: .8rem; color: var(--muted); margin-left: auto; }
+
+    /* ── Lookup ──────────────────────────────────────── */
+    #lookup-section {
+      max-width: 480px;
+      margin: 60px auto 0;
+      padding: 0 16px;
+      text-align: center;
+    }
+    #lookup-section h2 { font-size: 1.4rem; font-weight: 700; margin-bottom: 6px; }
+    #lookup-section p { color: var(--muted); font-size: .9rem; margin-bottom: 28px; }
+
+    .sid-form {
+      display: flex;
+      gap: 8px;
+    }
+    .sid-form input {
+      flex: 1;
+      padding: 11px 14px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      font-size: 1rem;
+      letter-spacing: .05em;
+      outline: none;
+      transition: border-color .15s;
+    }
+    .sid-form input:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(43,108,176,.15); }
+    .sid-form button {
+      padding: 11px 20px;
+      background: var(--primary);
+      color: #fff;
+      border: none;
+      border-radius: var(--radius);
+      font-size: .95rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background .15s;
+    }
+    .sid-form button:hover { background: #2c5282; }
+
+    #lookup-error {
+      margin-top: 12px;
+      color: #c53030;
+      font-size: .875rem;
+      display: none;
+    }
+
+    /* ── Dashboard ───────────────────────────────────── */
+    #dashboard { display: none; max-width: 860px; margin: 0 auto; padding: 28px 16px 60px; }
+
+    .resident-header {
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+    .resident-header h2 { font-size: 1.35rem; font-weight: 700; }
+    .badge {
+      display: inline-block;
+      font-size: .7rem;
+      font-weight: 700;
+      padding: 3px 9px;
+      border-radius: 99px;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+    }
+    .badge-pgy { background: var(--primary-light); color: var(--primary); }
+    .badge-on-track { background: var(--green-bg); color: var(--green); }
+    .badge-at-risk { background: var(--yellow-bg); color: var(--yellow); }
+    .badge-complete { background: var(--green-bg); color: var(--green); }
+    .badge-behind { background: var(--red-bg); color: var(--red); }
+
+    /* ── Summary cards ──────────────────────────────── */
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 16px 18px;
+      box-shadow: var(--shadow);
+    }
+    .card-label { font-size: .72rem; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; margin-bottom: 4px; }
+    .card-value { font-size: 1.6rem; font-weight: 700; }
+    .card-sub { font-size: .75rem; color: var(--muted); margin-top: 2px; }
+    .card-value.green { color: var(--green); }
+    .card-value.red { color: #c53030; }
+    .card-value.yellow { color: #b7791f; }
+
+    /* ── Sync / Async breakdown ─────────────────────── */
+    .sync-async {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 14px 18px;
+      display: grid;
+      grid-template-columns: 1fr 1px 1fr;
+      gap: 0;
+      margin-bottom: 18px;
+    }
+    .sync-async-col { padding: 0 16px; }
+    .sync-async-col:first-child { padding-left: 0; }
+    .sync-async-col:last-child { padding-right: 0; }
+    .sync-async-divider { background: var(--border); }
+    .sa-label { font-size: .72rem; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; margin-bottom: 6px; }
+    .sa-primary { font-size: 1.15rem; font-weight: 700; }
+    .sa-secondary { font-size: .8rem; color: var(--muted); margin-top: 2px; }
+    .sa-secondary span { font-weight: 600; color: var(--text); }
+
+    /* ── Progress bar ────────────────────────────────── */
+    .progress-wrap {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 16px 18px;
+      margin-bottom: 22px;
+    }
+    .progress-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+    .progress-title { font-size: .85rem; font-weight: 600; }
+    .progress-pct { font-size: .85rem; font-weight: 700; color: var(--primary); }
+    .progress-track {
+      background: var(--border);
+      border-radius: 99px;
+      height: 10px;
+      overflow: hidden;
+      position: relative;
+    }
+    .progress-bar {
+      height: 100%;
+      border-radius: 99px;
+      transition: width .5s ease;
+    }
+    .progress-note { font-size: .78rem; color: var(--muted); margin-top: 8px; }
+    .adjusted-note { font-size: .78rem; color: var(--primary); margin-top: 4px; font-style: italic; }
+
+    /* ── Sessions ─────────────────────────────────────── */
+    .section-title {
+      font-size: .9rem;
+      font-weight: 700;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: .06em;
+      margin-bottom: 10px;
+    }
+
+    .sessions-table {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      margin-bottom: 22px;
+    }
+    table { width: 100%; border-collapse: collapse; }
+    th {
+      background: #f7fafc;
+      font-size: .72rem;
+      font-weight: 700;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: .06em;
+      padding: 9px 14px;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+    td { padding: 9px 14px; font-size: .87rem; border-bottom: 1px solid var(--border); }
+    tr:last-child td { border-bottom: none; }
+    tr:hover td { background: #f7fafc; }
+
+    .status-dot {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-weight: 500;
+    }
+    .dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .dot-green { background: var(--green-bar); }
+    .dot-red { background: var(--red-bar); }
+    .dot-yellow { background: var(--yellow-bar); }
+    .dot-blue { background: #63b3ed; }
+
+    .tag-pill {
+      display: inline-block;
+      font-size: .65rem;
+      font-weight: 600;
+      padding: 2px 7px;
+      border-radius: 99px;
+      background: var(--primary-light);
+      color: var(--primary);
+      margin-left: 4px;
+      vertical-align: middle;
+    }
+
+    .future-row td { color: var(--muted); font-style: italic; }
+    .future-row td:first-child { font-style: normal; color: var(--text); }
+
+    /* ── Leave adjustment ─────────────────────────────── */
+    #leave-section { margin-top: 10px; }
+    .leave-toggle {
+      background: none;
+      border: none;
+      color: var(--muted);
+      font-size: .78rem;
+      cursor: pointer;
+      padding: 4px 0;
+      display: block;
+      margin: 0 auto 8px;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+    .leave-panel {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 16px 18px;
+      box-shadow: var(--shadow);
+      display: none;
+    }
+    .leave-panel h3 { font-size: .85rem; font-weight: 600; margin-bottom: 4px; }
+    .leave-panel p { font-size: .78rem; color: var(--muted); margin-bottom: 12px; }
+    .leave-row { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+    .leave-row input {
+      width: 120px;
+      padding: 8px 12px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-size: .9rem;
+      outline: none;
+    }
+    .leave-row input:focus { border-color: var(--primary); }
+    .leave-row button {
+      padding: 8px 16px;
+      background: var(--primary);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: .85rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .leave-row button:hover { background: #2c5282; }
+    .leave-reset {
+      background: none;
+      border: none;
+      color: #c53030;
+      font-size: .78rem;
+      cursor: pointer;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+      padding: 0;
+    }
+    .leave-note {
+      font-size: .72rem;
+      color: var(--muted);
+      margin-top: 8px;
+      font-style: italic;
+    }
+
+    /* ── Footer ───────────────────────────────────────── */
+    .page-footer {
+      text-align: center;
+      font-size: .72rem;
+      color: var(--muted);
+      margin-top: 20px;
+      padding-bottom: 12px;
+    }
+    .back-link {
+      display: inline-block;
+      font-size: .8rem;
+      color: var(--primary);
+      cursor: pointer;
+      background: none;
+      border: none;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+      margin-bottom: 16px;
+    }
+
+    /* ── Loading state ────────────────────────────────── */
+    #loading { text-align: center; padding: 80px 16px; color: var(--muted); font-size: .9rem; }
+    #load-error { text-align: center; padding: 80px 16px; color: #c53030; font-size: .9rem; }
+
+    @media (max-width: 520px) {
+      .sync-async { grid-template-columns: 1fr; }
+      .sync-async-divider { display: none; }
+      .sync-async-col { padding: 8px 0; border-top: 1px solid var(--border); }
+      .sync-async-col:first-child { border-top: none; padding-top: 0; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>EM Residency &mdash; Conference Attendance</h1>
+  <span class="sub" id="header-updated"></span>
+</header>
+
+<div id="loading">Loading attendance data&hellip;</div>
+<div id="load-error" style="display:none"></div>
+
+<!-- Lookup -->
+<section id="lookup-section" style="display:none">
+  <h2>Check Your Attendance</h2>
+  <p>Enter your SID to see your conference hours and standing.</p>
+  <form class="sid-form" id="sid-form">
+    <input id="sid-input" type="text" placeholder="e.g. S0364524" autocomplete="off" spellcheck="false" />
+    <button type="submit">Look up</button>
+  </form>
+  <p id="lookup-error"></p>
+</section>
+
+<!-- Dashboard -->
+<section id="dashboard">
+  <button class="back-link" id="back-btn">&larr; Look up another SID</button>
+
+  <div class="resident-header">
+    <h2 id="res-name"></h2>
+    <span class="badge badge-pgy" id="res-pgy"></span>
+    <span class="badge" id="res-status-badge"></span>
+  </div>
+
+  <!-- Summary cards -->
+  <div class="cards">
+    <div class="card">
+      <div class="card-label">Hours Attended</div>
+      <div class="card-value" id="card-attended"></div>
+      <div class="card-sub">total didactic</div>
+    </div>
+    <div class="card">
+      <div class="card-label">Required</div>
+      <div class="card-value" id="card-required"></div>
+      <div class="card-sub" id="card-required-sub"></div>
+    </div>
+    <div class="card">
+      <div class="card-label">Still Needed</div>
+      <div class="card-value" id="card-needed"></div>
+      <div class="card-sub" id="card-needed-sub"></div>
+    </div>
+    <div class="card">
+      <div class="card-label">Sessions Attended</div>
+      <div class="card-value" id="card-sessions"></div>
+      <div class="card-sub">of past sessions</div>
+    </div>
+  </div>
+
+  <!-- Sync / Async breakdown -->
+  <div class="sync-async">
+    <div class="sync-async-col">
+      <div class="sa-label">Sync Conference Hours</div>
+      <div class="sa-primary" id="sa-conf-attended"></div>
+      <div class="sa-secondary" id="sa-conf-remaining"></div>
+    </div>
+    <div class="sync-async-divider"></div>
+    <div class="sync-async-col">
+      <div class="sa-label">Async Hours</div>
+      <div class="sa-primary" id="sa-async-attended"></div>
+      <div class="sa-secondary" id="sa-async-remaining"></div>
+    </div>
+  </div>
+
+  <!-- Progress -->
+  <div class="progress-wrap">
+    <div class="progress-header">
+      <span class="progress-title">Progress toward requirement</span>
+      <span class="progress-pct" id="prog-pct"></span>
+    </div>
+    <div class="progress-track">
+      <div class="progress-bar" id="prog-bar"></div>
+    </div>
+    <p class="progress-note" id="prog-note"></p>
+    <p class="adjusted-note" id="prog-adjusted" style="display:none"></p>
+  </div>
+
+  <!-- Past sessions -->
+  <p class="section-title">Past Conferences</p>
+  <div class="sessions-table">
+    <table>
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Conference</th>
+          <th>Attendance</th>
+        </tr>
+      </thead>
+      <tbody id="past-tbody"></tbody>
+    </table>
+  </div>
+
+  <!-- Upcoming sessions -->
+  <p class="section-title" id="upcoming-title" style="display:none">Upcoming Conferences</p>
+  <div class="sessions-table" id="upcoming-table" style="display:none">
+    <table>
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Conference</th>
+          <th>Max Hours</th>
+        </tr>
+      </thead>
+      <tbody id="upcoming-tbody"></tbody>
+    </table>
+  </div>
+
+  <!-- Leave adjustment (subtle) -->
+  <div id="leave-section">
+    <button class="leave-toggle" id="leave-toggle">Adjust for parental / medical leave</button>
+    <div class="leave-panel" id="leave-panel">
+      <h3>Custom Required Hours</h3>
+      <p>If you have an approved leave adjustment, enter your modified required hours below. This is saved in your browser only.</p>
+      <div class="leave-row">
+        <input type="number" id="leave-input" step="0.5" min="0" />
+        <button id="leave-save">Save</button>
+        <button class="leave-reset" id="leave-reset">Reset to default</button>
+      </div>
+      <p class="leave-note">Saved in this browser only. Clears when you clear cookies.</p>
+    </div>
+  </div>
+
+  <div class="page-footer" id="page-footer"></div>
+</section>
+
+<script>
+  const DATA_URL = 'data/attendance.json';
+  let DATA = null;
+  let currentSid = null;
+
+  // ── Cookie helpers ──────────────────────────────────
+  function cookieKey(sid) { return `conf_denom_${sid}`; }
+
+  function getCustomRequired(sid) {
+    const key = cookieKey(sid);
+    const found = document.cookie.split('; ').find(r => r.startsWith(key + '='));
+    return found ? parseFloat(found.split('=')[1]) : null;
+  }
+
+  function setCustomRequired(sid, value) {
+    document.cookie = `${cookieKey(sid)}=${value}; expires=Wed, 01 Jul 2026 00:00:00 GMT; path=/`;
+  }
+
+  function clearCustomRequired(sid) {
+    document.cookie = `${cookieKey(sid)}=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/`;
+  }
+
+  // ── Data loading ────────────────────────────────────
+  async function loadData() {
+    try {
+      const r = await fetch(DATA_URL);
+      if (!r.ok) throw new Error(`HTTP ${r.status}`);
+      DATA = await r.json();
+      document.getElementById('loading').style.display = 'none';
+      document.getElementById('lookup-section').style.display = 'block';
+      if (DATA.lastUpdated) {
+        document.getElementById('header-updated').textContent = `Data as of ${DATA.lastUpdated}`;
+      }
+    } catch (e) {
+      document.getElementById('loading').style.display = 'none';
+      const el = document.getElementById('load-error');
+      el.style.display = 'block';
+      el.textContent = `Could not load attendance data: ${e.message}`;
+    }
+  }
+
+  // ── Date helpers ────────────────────────────────────
+  function today() {
+    const d = new Date();
+    return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+  }
+
+  function fmtDate(iso) {
+    const [y, m, d] = iso.split('-');
+    const dt = new Date(+y, +m - 1, +d);
+    return dt.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+  }
+
+  // ── Lookup ───────────────────────────────────────────
+  document.getElementById('sid-form').addEventListener('submit', e => {
+    e.preventDefault();
+    const sid = document.getElementById('sid-input').value.trim().toUpperCase();
+    const errEl = document.getElementById('lookup-error');
+    errEl.style.display = 'none';
+
+    if (!/^S\d{7}$/.test(sid)) {
+      errEl.textContent = 'SID format is S followed by 7 digits (e.g. S0364524).';
+      errEl.style.display = 'block';
+      return;
+    }
+    const resident = DATA.residents.find(r => r.sid.toUpperCase() === sid);
+    if (!resident) {
+      errEl.textContent = `SID ${sid} not found in this year's roster.`;
+      errEl.style.display = 'block';
+      return;
+    }
+    showDashboard(resident);
+  });
+
+  document.getElementById('back-btn').addEventListener('click', () => {
+    document.getElementById('dashboard').style.display = 'none';
+    document.getElementById('lookup-section').style.display = 'block';
+    document.getElementById('sid-input').value = '';
+    document.getElementById('sid-input').focus();
+  });
+
+  // ── Dashboard ────────────────────────────────────────
+  function showDashboard(res) {
+    currentSid = res.sid;
+    document.getElementById('lookup-section').style.display = 'none';
+    const dash = document.getElementById('dashboard');
+    dash.style.display = 'block';
+
+    const todayStr = today();
+    const sessions = DATA.sessions;
+
+    // Partition sessions into past and future
+    const past = sessions.map((s, i) => ({ ...s, idx: i })).filter(s => s.date <= todayStr);
+    const future = sessions.map((s, i) => ({ ...s, idx: i })).filter(s => s.date > todayStr);
+
+    // Per-session values for this resident
+    function sessVal(idx) { return res.sessions[idx]; }
+    function isAttended(v) { return typeof v === 'number' && v > 0; }
+    function isPresent(v) { return typeof v === 'number'; } // 0 = explicit miss
+
+    // Hours / sessions counts
+    const pastAttendedSessions = past.filter(s => isAttended(sessVal(s.idx))).length;
+    const futureMaxHours = future.reduce((sum, s) => sum + (s.maxHours || 0), 0);
+    const futureCount = future.length;
+
+    // Required hours (custom override via cookie)
+    const defaultRequired = DATA.requiredHours[res.pgyLevel] || 0;
+    const customRequired = getCustomRequired(res.sid);
+    const required = customRequired !== null ? customRequired : defaultRequired;
+
+    // Async
+    const maxAsync = DATA.maxAsyncHours || 18.5;
+    const asyncRemaining = Math.max(0, maxAsync - res.asyncHours);
+
+    // Status
+    const attended = res.totalHours;
+    const needed = Math.max(0, required - attended);
+    const pct = Math.min(100, required > 0 ? (attended / required) * 100 : 100);
+    const canStillMeet = attended + futureMaxHours + asyncRemaining >= required;
+
+    let statusClass, statusText;
+    if (attended >= required) {
+      statusClass = 'badge-complete'; statusText = 'Complete ✓';
+    } else if (!canStillMeet) {
+      statusClass = 'badge-behind'; statusText = 'At Risk';
+    } else if (pct >= 80) {
+      statusClass = 'badge-on-track'; statusText = 'On Track';
+    } else {
+      statusClass = 'badge-at-risk'; statusText = 'Behind';
+    }
+
+    // ── Resident header ──
+    document.getElementById('res-name').textContent = res.name;
+    document.getElementById('res-pgy').textContent = res.pgyLevel;
+    const sb = document.getElementById('res-status-badge');
+    sb.className = `badge ${statusClass}`;
+    sb.textContent = statusText;
+
+    // ── Cards ──
+    const neededEl = document.getElementById('card-needed');
+    document.getElementById('card-attended').textContent = `${attended} h`;
+    document.getElementById('card-required').textContent = `${required} h`;
+    document.getElementById('card-required-sub').textContent = customRequired !== null ? `${res.pgyLevel} (adjusted)` : res.pgyLevel;
+    neededEl.textContent = `${needed} h`;
+    neededEl.className = 'card-value ' + (needed === 0 ? 'green' : needed > futureMaxHours + asyncRemaining ? 'red' : '');
+    const neededSub = document.getElementById('card-needed-sub');
+    neededSub.textContent = needed === 0 ? 'Requirement met!' : futureMaxHours > 0 ? `${(futureMaxHours + asyncRemaining).toFixed(1)} h still possible` : 'No future sessions';
+    document.getElementById('card-sessions').textContent = `${pastAttendedSessions} / ${past.length}`;
+
+    // ── Sync / Async breakdown ──
+    document.getElementById('sa-conf-attended').textContent = `${res.conferenceHours} h attended`;
+    const confRemEl = document.getElementById('sa-conf-remaining');
+    if (futureCount > 0) {
+      confRemEl.innerHTML = `<span>${futureMaxHours.toFixed(1)} h available</span> across ${futureCount} upcoming session${futureCount !== 1 ? 's' : ''}`;
+    } else {
+      confRemEl.textContent = 'No upcoming sessions';
+    }
+    document.getElementById('sa-async-attended').textContent = `${res.asyncHours} h accumulated`;
+    const asyncRemEl = document.getElementById('sa-async-remaining');
+    if (asyncRemaining > 0) {
+      asyncRemEl.innerHTML = `<span>${asyncRemaining.toFixed(1)} h remaining</span> eligible (max ${maxAsync})`;
+    } else {
+      asyncRemEl.textContent = `Maximum reached (${maxAsync} h)`;
+    }
+
+    // ── Progress ──
+    const barEl = document.getElementById('prog-bar');
+    const barColor = attended >= required ? 'var(--green-bar)' : pct >= 80 ? 'var(--yellow-bar)' : 'var(--red-bar)';
+    barEl.style.width = `${pct.toFixed(1)}%`;
+    barEl.style.background = barColor;
+    document.getElementById('prog-pct').textContent = `${pct.toFixed(1)}%`;
+    const noteEl = document.getElementById('prog-note');
+    if (needed === 0) {
+      noteEl.textContent = `Requirement complete. ${(attended - required).toFixed(1)} h over the minimum.`;
+    } else {
+      noteEl.textContent = `${needed.toFixed(1)} h still needed. ${futureMaxHours.toFixed(1)} h available from ${futureCount} remaining conference${futureCount !== 1 ? 's' : ''} + ${asyncRemaining.toFixed(1)} h async eligible.`;
+    }
+    const adjEl = document.getElementById('prog-adjusted');
+    if (customRequired !== null) {
+      adjEl.style.display = 'block';
+      adjEl.textContent = `Using adjusted requirement of ${customRequired} h (default for ${res.pgyLevel}: ${defaultRequired} h).`;
+    } else {
+      adjEl.style.display = 'none';
+    }
+
+    // ── Past sessions table ──
+    // Sessions on/after lastUpdated with 0 hours are "pending" (not yet entered), not "missed"
+    const lastUpdatedStr = (DATA.lastUpdated || '').replace(/(\d+)\/(\d+)\/(\d+)/, (_, m, d, y) => {
+      const yr = +y < 100 ? 2000 + +y : +y;
+      return `${yr}-${String(m).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+    });
+
+    const pastTbody = document.getElementById('past-tbody');
+    pastTbody.innerHTML = '';
+    [...past].reverse().forEach(s => {
+      const val = sessVal(s.idx);
+      const isPending = s.date > lastUpdatedStr && (val === 0 || val === 0.0);
+      let attendanceHtml;
+      if (isAttended(val)) {
+        attendanceHtml = `<span class="status-dot"><span class="dot dot-green"></span>${val} h</span>`;
+      } else if (isPending) {
+        attendanceHtml = `<span class="status-dot"><span class="dot dot-blue"></span>Pending</span>`;
+      } else if (val === 0 || val === 0.0) {
+        attendanceHtml = `<span class="status-dot"><span class="dot dot-red"></span>Missed</span>`;
+      } else {
+        // String label: Vacation, LOA, A. Elective
+        attendanceHtml = `<span class="status-dot"><span class="dot dot-yellow"></span>${val}</span>`;
+      }
+      const tr = document.createElement('tr');
+      tr.innerHTML = `<td></td><td></td><td>${attendanceHtml}</td>`;
+      tr.children[0].textContent = fmtDate(s.date);
+      tr.children[1].innerHTML = s.tag
+        ? `<span class="tag-pill">${s.tag}</span>`
+        : `<span style="color:var(--muted)">Regular</span>`;
+      pastTbody.appendChild(tr);
+    });
+
+    // ── Upcoming sessions table ──
+    const upcomingTitle = document.getElementById('upcoming-title');
+    const upcomingTable = document.getElementById('upcoming-table');
+    const upcomingTbody = document.getElementById('upcoming-tbody');
+    upcomingTbody.innerHTML = '';
+    if (future.length > 0) {
+      upcomingTitle.style.display = 'block';
+      upcomingTable.style.display = 'block';
+      future.forEach(s => {
+        const tagHtml = s.tag ? `<span class="tag-pill">${s.tag}</span>` : '';
+        const tr = document.createElement('tr');
+        tr.className = 'future-row';
+        tr.innerHTML = `
+          <td>${fmtDate(s.date)}</td>
+          <td>${s.tag ? `<span class="tag-pill">${s.tag}</span>` : '<span style="color:var(--muted)">Regular</span>'}</td>
+          <td>${s.maxHours} h</td>`;
+        upcomingTbody.appendChild(tr);
+      });
+    } else {
+      upcomingTitle.style.display = 'none';
+      upcomingTable.style.display = 'none';
+    }
+
+    // ── Leave adjustment ──
+    const leaveInput = document.getElementById('leave-input');
+    leaveInput.value = customRequired !== null ? customRequired : defaultRequired;
+    document.getElementById('leave-panel').style.display = 'none';
+
+    document.getElementById('page-footer').textContent =
+      `Data last updated: ${DATA.lastUpdated} · ${DATA.academicYear} · ${DATA.residents.length} residents`;
+
+    window.scrollTo(0, 0);
+  }
+
+  // ── Leave panel ──────────────────────────────────────
+  document.getElementById('leave-toggle').addEventListener('click', () => {
+    const panel = document.getElementById('leave-panel');
+    panel.style.display = panel.style.display === 'none' ? 'block' : 'none';
+  });
+
+  document.getElementById('leave-save').addEventListener('click', () => {
+    const val = parseFloat(document.getElementById('leave-input').value);
+    if (isNaN(val) || val < 0) return;
+    setCustomRequired(currentSid, val);
+    const res = DATA.residents.find(r => r.sid === currentSid);
+    if (res) showDashboard(res);
+  });
+
+  document.getElementById('leave-reset').addEventListener('click', () => {
+    clearCustomRequired(currentSid);
+    const res = DATA.residents.find(r => r.sid === currentSid);
+    if (res) {
+      document.getElementById('leave-input').value = DATA.requiredHours[res.pgyLevel] || 0;
+      showDashboard(res);
+    }
+  });
+
+  // ── Init ─────────────────────────────────────────────
+  loadData();
+</script>
+</body>
+</html>

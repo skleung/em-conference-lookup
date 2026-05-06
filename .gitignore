@@ -1,0 +1,15 @@
+# Local data source — not committed (attendance.json is the generated output)
+*.xlsx
+
+# macOS
+.DS_Store
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.env
+
+# Editor
+.vscode/
+*.swp

@@ -1,0 +1,34 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  validate:
+    name: Validate attendance data
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install openpyxl requests
+
+      - name: Validate attendance.json
+        run: python scripts/validate_data.py
+
+      - name: Check index.html exists
+        run: test -f index.html && echo "index.html ✓"
+
+      - name: Check data file is not empty
+        run: |
+          RESIDENTS=$(python3 -c "import json; d=json.load(open('data/attendance.json')); print(len(d['residents']))")
+          echo "Residents in data: $RESIDENTS"
+          [ "$RESIDENTS" -ge 10 ] || (echo "Too few residents" && exit 1)
