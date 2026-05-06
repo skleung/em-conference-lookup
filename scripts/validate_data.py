@@ -99,7 +99,7 @@ def validate():
         ok(f"{len(residents)} residents found")
 
     # ── Resident schema ──
-    res_keys = {"name", "sid", "pgyLevel", "totalHours", "conferenceHours", "asyncHours", "sessions"}
+    res_keys = {"sid", "pgyLevel", "totalHours", "conferenceHours", "asyncHours", "sessions"}
     bad_res = [r.get("sid", f"idx={i}") for i, r in enumerate(residents) if not res_keys.issubset(r.keys())]
     if bad_res:
         fail(f"Residents missing required keys: {bad_res[:5]}")

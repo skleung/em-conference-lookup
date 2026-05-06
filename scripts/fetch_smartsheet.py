@@ -132,7 +132,6 @@ def from_xlsx(xlsx_path: Optional[Path] = None) -> dict:
             session_vals.append(normalize_session_value(raw))
 
         residents.append({
-            "name": str(row[NAME_COL]).strip() if row[NAME_COL] else "",
             "sid": str(sid).strip(),
             "pgyLevel": str(row[PGY_COL]).strip() if row[PGY_COL] else "",
             "totalHours": float(row[TOTAL_COL]) if isinstance(row[TOTAL_COL], (int, float)) else 0.0,
@@ -236,7 +235,6 @@ def from_api() -> dict:
 
         session_vals = [normalize_session_value(cell_val(api_row, s["colId"])) for s in sessions]
         residents.append({
-            "name": str(cell_val(api_row, name_col_id) or "").strip(),
             "sid": str(sid).strip(),
             "pgyLevel": str(pgy).strip(),
             "totalHours": float(v) if isinstance((v := cell_val(api_row, total_col_id)), (int, float)) else 0.0,

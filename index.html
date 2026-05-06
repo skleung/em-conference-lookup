@@ -322,6 +322,8 @@
       margin-top: 20px;
       padding-bottom: 12px;
     }
+    .page-footer a { color: var(--muted); text-decoration: underline; }
+    .page-footer a:hover { color: var(--text); }
     .back-link {
       display: inline-block;
       font-size: .8rem;
@@ -361,7 +363,7 @@
   <h2>Check Your Attendance</h2>
   <p>Enter your SID to see your conference hours and standing.</p>
   <form class="sid-form" id="sid-form">
-    <input id="sid-input" type="text" placeholder="e.g. S0364524" autocomplete="off" spellcheck="false" />
+    <input id="sid-input" type="text" placeholder="e.g. S0123456" autocomplete="off" spellcheck="false" />
     <button type="submit">Look up</button>
   </form>
   <p id="lookup-error"></p>
@@ -372,7 +374,6 @@
   <button class="back-link" id="back-btn">&larr; Look up another SID</button>
 
   <div class="resident-header">
-    <h2 id="res-name"></h2>
     <span class="badge badge-pgy" id="res-pgy"></span>
     <span class="badge" id="res-status-badge"></span>
   </div>
@@ -538,7 +539,7 @@
     errEl.style.display = 'none';
 
     if (!/^S\d{7}$/.test(sid)) {
-      errEl.textContent = 'SID format is S followed by 7 digits (e.g. S0364524).';
+      errEl.textContent = 'SID format is S followed by 7 digits (e.g. S0123456).';
       errEl.style.display = 'block';
       return;
     }
@@ -609,7 +610,6 @@
     }
 
     // ── Resident header ──
-    document.getElementById('res-name').textContent = res.name;
     document.getElementById('res-pgy').textContent = res.pgyLevel;
     const sb = document.getElementById('res-status-badge');
     sb.className = `badge ${statusClass}`;
@@ -722,8 +722,10 @@
     leaveInput.value = customRequired !== null ? customRequired : defaultRequired;
     document.getElementById('leave-panel').style.display = 'none';
 
-    document.getElementById('page-footer').textContent =
-      `Data last updated: ${DATA.lastUpdated} · ${DATA.academicYear} · ${DATA.residents.length} residents`;
+    document.getElementById('page-footer').innerHTML =
+      `Data last updated: ${DATA.lastUpdated} · ${DATA.academicYear} · ${DATA.residents.length} residents` +
+      ` · <a href="https://app.smartsheet.com/b/publish?EQBCT=1c8b6e2ebff7412699dcc511609ecc0b" target="_blank" rel="noopener">Source spreadsheet</a>` +
+      ` · <a href="https://drive.google.com/file/d/1yLMBg8WMRiSyQFf9pqSixRtd7GHOzw2Q/view" target="_blank" rel="noopener">Attendance policy</a>`;
 
     window.scrollTo(0, 0);
   }

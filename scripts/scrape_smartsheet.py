@@ -244,7 +244,6 @@ async def scrape(url: str) -> dict:
             session_vals.append(normalize_cell(raw))
 
         residents.append({
-            "name": row.get(name_col_idx, "").strip(),
             "sid": sid,
             "pgyLevel": row.get(pgy_col_idx, "").strip(),
             "totalHours": get_float(total_col_idx),
@@ -254,7 +253,7 @@ async def scrape(url: str) -> dict:
         })
 
     # Sort residents alphabetically by name
-    residents.sort(key=lambda r: r["name"])
+    residents.sort(key=lambda r: r["sid"])
 
     out_sessions = [{k: v for k, v in s.items() if k != "colIdx"} for s in sessions]
 
