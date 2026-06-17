@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-05-21",
+  "lastUpdated": "2026-06-12",
   "academicYear": "AY25-26",
   "maxAsyncHours": 18.5,
   "totalPossibleHours": 250.0,
@@ -373,7 +373,7 @@
         5.5,
         "Vacation",
         4.0,
-        0.0,
+        "CVICU",
         0.0,
         0.0
       ]
@@ -441,8 +441,8 @@
     {
       "sid": "S0335090",
       "pgyLevel": "PGY4",
-      "totalHours": 187.5,
-      "conferenceHours": 169.0,
+      "totalHours": 193.0,
+      "conferenceHours": 174.5,
       "asyncHours": 18.5,
       "sessions": [
         4.0,
@@ -493,7 +493,7 @@
         5.0,
         4.5,
         0.0,
-        0.0,
+        5.5,
         0.0,
         0.0
       ]
@@ -613,7 +613,7 @@
         5.5,
         4.0,
         4.0,
-        0.0,
+        "Vacation",
         0.0,
         0.0
       ]
@@ -621,8 +621,8 @@
     {
       "sid": "S0344888",
       "pgyLevel": "PGY4",
-      "totalHours": 189.0,
-      "conferenceHours": 170.5,
+      "totalHours": 194.5,
+      "conferenceHours": 176.0,
       "asyncHours": 18.5,
       "sessions": [
         "Vacation",
@@ -673,7 +673,7 @@
         5.5,
         4.5,
         0.0,
-        0.0,
+        5.5,
         0.0,
         0.0
       ]
@@ -681,8 +681,8 @@
     {
       "sid": "S0344897",
       "pgyLevel": "PGY4",
-      "totalHours": 191.5,
-      "conferenceHours": 173.0,
+      "totalHours": 197.0,
+      "conferenceHours": 178.5,
       "asyncHours": 18.5,
       "sessions": [
         4.0,
@@ -733,7 +733,7 @@
         0.5,
         0.0,
         4.0,
-        0.0,
+        5.5,
         0.0,
         0.0
       ]
@@ -741,8 +741,8 @@
     {
       "sid": "S0344916",
       "pgyLevel": "PGY4",
-      "totalHours": 185.5,
-      "conferenceHours": 167.0,
+      "totalHours": 191.0,
+      "conferenceHours": 172.5,
       "asyncHours": 18.5,
       "sessions": [
         4.0,
@@ -793,7 +793,7 @@
         5.5,
         4.5,
         0.0,
-        0.0,
+        5.5,
         0.0,
         0.0
       ]
@@ -853,7 +853,7 @@
         5.5,
         4.5,
         4.0,
-        0.0,
+        "A. Elective",
         0.0,
         0.0
       ]
@@ -861,8 +861,8 @@
     {
       "sid": "S0344953",
       "pgyLevel": "PGY4",
-      "totalHours": 190.0,
-      "conferenceHours": 171.5,
+      "totalHours": 195.5,
+      "conferenceHours": 177.0,
       "asyncHours": 18.5,
       "sessions": [
         3.0,
@@ -913,7 +913,7 @@
         5.5,
         4.5,
         4.0,
-        0.0,
+        5.5,
         0.0,
         0.0
       ]
@@ -921,9 +921,9 @@
     {
       "sid": "S0344960",
       "pgyLevel": "PGY4",
-      "totalHours": 178.0,
-      "conferenceHours": 170.5,
-      "asyncHours": 7.5,
+      "totalHours": 184.5,
+      "conferenceHours": 174.5,
+      "asyncHours": 10.0,
       "sessions": [
         "LOA",
         "LOA",
@@ -973,7 +973,7 @@
         5.5,
         2.0,
         4.0,
-        0.0,
+        4.0,
         0.0,
         0.0
       ]
@@ -981,9 +981,9 @@
     {
       "sid": "S0344961",
       "pgyLevel": "PGY4",
-      "totalHours": 161.5,
-      "conferenceHours": 155.5,
-      "asyncHours": 6.0,
+      "totalHours": 179.5,
+      "conferenceHours": 161.0,
+      "asyncHours": 18.5,
       "sessions": [
         4.0,
         5.0,
@@ -1033,7 +1033,7 @@
         0.0,
         0.0,
         "Vacation",
-        0.0,
+        5.5,
         0.0,
         0.0
       ]
@@ -1041,8 +1041,8 @@
     {
       "sid": "S0344962",
       "pgyLevel": "PGY4",
-      "totalHours": 178.5,
-      "conferenceHours": 160.0,
+      "totalHours": 184.0,
+      "conferenceHours": 165.5,
       "asyncHours": 18.5,
       "sessions": [
         4.0,
@@ -1093,7 +1093,7 @@
         5.5,
         4.5,
         4.0,
-        0.0,
+        5.5,
         0.0,
         0.0
       ]
@@ -1101,9 +1101,9 @@
     {
       "sid": "S0344968",
       "pgyLevel": "PGY4",
-      "totalHours": 145.0,
-      "conferenceHours": 137.0,
-      "asyncHours": 8.0,
+      "totalHours": 153.5,
+      "conferenceHours": 142.5,
+      "asyncHours": 11.0,
       "sessions": [
         0.0,
         5.0,
@@ -1153,7 +1153,7 @@
         5.5,
         4.5,
         4.0,
-        0.0,
+        5.5,
         0.0,
         0.0
       ]
@@ -1161,8 +1161,8 @@
     {
       "sid": "S0344976",
       "pgyLevel": "PGY4",
-      "totalHours": 183.5,
-      "conferenceHours": 165.0,
+      "totalHours": 189.0,
+      "conferenceHours": 170.5,
       "asyncHours": 18.5,
       "sessions": [
         0.0,
@@ -1213,7 +1213,7 @@
         5.0,
         4.5,
         4.0,
-        0.0,
+        5.5,
         0.0,
         0.0
       ]
@@ -1221,8 +1221,8 @@
     {
       "sid": "S0344977",
       "pgyLevel": "PGY4",
-      "totalHours": 170.0,
-      "conferenceHours": 167.5,
+      "totalHours": 175.5,
+      "conferenceHours": 173.0,
       "asyncHours": 2.5,
       "sessions": [
         4.0,
@@ -1273,7 +1273,7 @@
         5.5,
         "Vacation",
         "Vacation",
-        0.0,
+        5.5,
         0.0,
         0.0
       ]
@@ -1401,8 +1401,8 @@
     {
       "sid": "S0351126",
       "pgyLevel": "PGY3",
-      "totalHours": 179.5,
-      "conferenceHours": 161.0,
+      "totalHours": 185.0,
+      "conferenceHours": 166.5,
       "asyncHours": 18.5,
       "sessions": [
         4.0,
@@ -1453,7 +1453,7 @@
         5.5,
         4.5,
         0.0,
-        0.0,
+        5.5,
         0.0,
         0.0
       ]
@@ -1461,8 +1461,8 @@
     {
       "sid": "S0352952",
       "pgyLevel": "PGY3",
-      "totalHours": 174.0,
-      "conferenceHours": 155.5,
+      "totalHours": 178.0,
+      "conferenceHours": 159.5,
       "asyncHours": 18.5,
       "sessions": [
         4.0,
@@ -1513,7 +1513,7 @@
         5.5,
         4.5,
         4.0,
-        0.0,
+        4.0,
         0.0,
         0.0
       ]
@@ -1581,9 +1581,9 @@
     {
       "sid": "S0364516",
       "pgyLevel": "PGY3",
-      "totalHours": 171.5,
-      "conferenceHours": 154.0,
-      "asyncHours": 17.5,
+      "totalHours": 178.0,
+      "conferenceHours": 159.5,
+      "asyncHours": 18.5,
       "sessions": [
         4.0,
         0.0,
@@ -1633,7 +1633,7 @@
         "SAEM",
         4.5,
         4.0,
-        0.0,
+        5.5,
         0.0,
         0.0
       ]
@@ -1641,8 +1641,8 @@
     {
       "sid": "S0364518",
       "pgyLevel": "PGY3",
-      "totalHours": 189.0,
-      "conferenceHours": 174.5,
+      "totalHours": 194.5,
+      "conferenceHours": 180.0,
       "asyncHours": 14.5,
       "sessions": [
         4.0,
@@ -1693,7 +1693,7 @@
         5.5,
         4.5,
         4.0,
-        0.0,
+        5.5,
         0.0,
         0.0
       ]
@@ -1701,8 +1701,8 @@
     {
       "sid": "S0364520",
       "pgyLevel": "PGY3",
-      "totalHours": 175.0,
-      "conferenceHours": 165.0,
+      "totalHours": 180.5,
+      "conferenceHours": 170.5,
       "asyncHours": 10.0,
       "sessions": [
         "CVICU",
@@ -1753,7 +1753,7 @@
         0.0,
         4.5,
         4.0,
-        0.0,
+        5.5,
         0.0,
         0.0
       ]
@@ -1813,7 +1813,7 @@
         5.5,
         4.5,
         "A. Elective",
-        0.0,
+        "A. Elective",
         0.0,
         0.0
       ]
@@ -1821,8 +1821,8 @@
     {
       "sid": "S0364533",
       "pgyLevel": "PGY3",
-      "totalHours": 178.0,
-      "conferenceHours": 159.5,
+      "totalHours": 182.0,
+      "conferenceHours": 163.5,
       "asyncHours": 18.5,
       "sessions": [
         4.0,
@@ -1868,7 +1868,7 @@
         5.5,
         0.0,
         4.5,
-        0.0,
+        4.0,
         0.0,
         5.5,
         3.0,
@@ -1881,8 +1881,8 @@
     {
       "sid": "S0364534",
       "pgyLevel": "PGY3",
-      "totalHours": 179.5,
-      "conferenceHours": 161.0,
+      "totalHours": 185.0,
+      "conferenceHours": 166.5,
       "asyncHours": 18.5,
       "sessions": [
         4.0,
@@ -1933,7 +1933,7 @@
         "SAEM",
         4.5,
         "A. Elective",
-        0.0,
+        5.5,
         0.0,
         0.0
       ]
@@ -1941,8 +1941,8 @@
     {
       "sid": "S0364541",
       "pgyLevel": "PGY3",
-      "totalHours": 179.0,
-      "conferenceHours": 169.0,
+      "totalHours": 182.0,
+      "conferenceHours": 172.0,
       "asyncHours": 10.0,
       "sessions": [
         4.0,
@@ -1993,7 +1993,7 @@
         5.5,
         4.5,
         4.0,
-        0.0,
+        3.0,
         0.0,
         0.0
       ]
@@ -2001,8 +2001,8 @@
     {
       "sid": "S0364547",
       "pgyLevel": "PGY3",
-      "totalHours": 179.0,
-      "conferenceHours": 161.5,
+      "totalHours": 183.5,
+      "conferenceHours": 166.0,
       "asyncHours": 17.5,
       "sessions": [
         4.0,
@@ -2053,7 +2053,7 @@
         "Vacation",
         0.0,
         0.0,
-        0.0,
+        4.5,
         0.0,
         0.0
       ]
@@ -2061,8 +2061,8 @@
     {
       "sid": "S0364548",
       "pgyLevel": "PGY3",
-      "totalHours": 181.0,
-      "conferenceHours": 162.5,
+      "totalHours": 185.5,
+      "conferenceHours": 167.0,
       "asyncHours": 18.5,
       "sessions": [
         4.0,
@@ -2113,7 +2113,7 @@
         5.5,
         3.0,
         4.0,
-        0.0,
+        4.5,
         0.0,
         0.0
       ]
@@ -2233,7 +2233,7 @@
         0.0,
         4.5,
         3.0,
-        0.0,
+        "SICU",
         0.0,
         0.0
       ]
@@ -2473,7 +2473,7 @@
         0.0,
         "MICU",
         "MICU",
-        0.0,
+        "MICU",
         0.0,
         0.0
       ]
@@ -2481,8 +2481,8 @@
     {
       "sid": "S0379973",
       "pgyLevel": "PGY2",
-      "totalHours": 156.5,
-      "conferenceHours": 138.0,
+      "totalHours": 162.0,
+      "conferenceHours": 143.5,
       "asyncHours": 18.5,
       "sessions": [
         4.0,
@@ -2533,7 +2533,7 @@
         5.5,
         4.5,
         0.0,
-        0.0,
+        5.5,
         0.0,
         0.0
       ]
@@ -2593,7 +2593,7 @@
         0.0,
         4.5,
         "PICU",
-        0.0,
+        "PICU",
         0.0,
         0.0
       ]
@@ -2661,8 +2661,8 @@
     {
       "sid": "S0380006",
       "pgyLevel": "PGY2",
-      "totalHours": 155.5,
-      "conferenceHours": 140.5,
+      "totalHours": 158.5,
+      "conferenceHours": 143.5,
       "asyncHours": 15.0,
       "sessions": [
         0.0,
@@ -2713,7 +2713,7 @@
         5.5,
         4.5,
         1.0,
-        0.0,
+        3.0,
         0.0,
         0.0
       ]
@@ -2893,7 +2893,7 @@
         0.0,
         0.0,
         0.0,
-        0.0,
+        "Vacation",
         0.0,
         0.0
       ]
@@ -3013,7 +3013,7 @@
         5.5,
         4.5,
         4.0,
-        0.0,
+        "Vacation",
         0.0,
         0.0
       ]
@@ -3021,8 +3021,8 @@
     {
       "sid": "S0382395",
       "pgyLevel": "PGY1",
-      "totalHours": 186.5,
-      "conferenceHours": 168.0,
+      "totalHours": 192.0,
+      "conferenceHours": 173.5,
       "asyncHours": 18.5,
       "sessions": [
         4.0,
@@ -3073,7 +3073,7 @@
         4.5,
         4.5,
         4.0,
-        0.0,
+        5.5,
         0.0,
         0.0
       ]
@@ -3081,8 +3081,8 @@
     {
       "sid": "S0383405",
       "pgyLevel": "PGY1",
-      "totalHours": 179.0,
-      "conferenceHours": 160.5,
+      "totalHours": 184.5,
+      "conferenceHours": 166.0,
       "asyncHours": 18.5,
       "sessions": [
         4.0,
@@ -3133,7 +3133,7 @@
         5.5,
         4.5,
         4.0,
-        0.0,
+        5.5,
         0.0,
         0.0
       ]
@@ -3141,9 +3141,9 @@
     {
       "sid": "S0383436",
       "pgyLevel": "PGY1",
-      "totalHours": 174.0,
-      "conferenceHours": 156.0,
-      "asyncHours": 18.0,
+      "totalHours": 180.0,
+      "conferenceHours": 161.5,
+      "asyncHours": 18.5,
       "sessions": [
         4.0,
         5.0,
@@ -3193,7 +3193,7 @@
         5.0,
         4.5,
         "Vacation",
-        0.0,
+        5.5,
         0.0,
         0.0
       ]
@@ -3253,7 +3253,7 @@
         5.5,
         4.5,
         4.0,
-        0.0,
+        "Vacation",
         0.0,
         0.0
       ]
@@ -3261,8 +3261,8 @@
     {
       "sid": "S0384309",
       "pgyLevel": "PGY1",
-      "totalHours": 162.5,
-      "conferenceHours": 145.5,
+      "totalHours": 166.5,
+      "conferenceHours": 149.5,
       "asyncHours": 17.0,
       "sessions": [
         4.0,
@@ -3313,7 +3313,7 @@
         5.5,
         4.5,
         4.0,
-        0.0,
+        4.0,
         0.0,
         0.0
       ]
@@ -3321,8 +3321,8 @@
     {
       "sid": "S0385116",
       "pgyLevel": "PGY1",
-      "totalHours": 159.5,
-      "conferenceHours": 159.5,
+      "totalHours": 170.5,
+      "conferenceHours": 170.5,
       "asyncHours": 0.0,
       "sessions": [
         4.0,
@@ -3370,10 +3370,10 @@
         "Vacation",
         4.0,
         3.0,
-        0.0,
+        5.5,
         4.5,
         4.0,
-        0.0,
+        5.5,
         0.0,
         0.0
       ]
@@ -3433,7 +3433,7 @@
         5.5,
         4.5,
         4.0,
-        0.0,
+        "Vacation",
         0.0,
         0.0
       ]
@@ -3441,8 +3441,8 @@
     {
       "sid": "S0388065",
       "pgyLevel": "PGY3",
-      "totalHours": 118.0,
-      "conferenceHours": 118.0,
+      "totalHours": 123.5,
+      "conferenceHours": 123.5,
       "asyncHours": 0.0,
       "sessions": [
         "PICU",
@@ -3483,17 +3483,17 @@
         4.0,
         5.5,
         4.0,
-        0.0,
-        "Vacation",
-        0.0,
+        "LOA",
+        "LOA",
+        "LOA",
         4.0,
-        0.0,
+        "LOA",
         4.0,
+        "LOA",
+        "LOA",
+        "LOA",
         0.0,
-        0.0,
-        "Vacation",
-        0.0,
-        0.0,
+        5.5,
         0.0,
         0.0
       ]
@@ -3561,8 +3561,8 @@
     {
       "sid": "S0397278",
       "pgyLevel": "PGY1",
-      "totalHours": 184.5,
-      "conferenceHours": 166.0,
+      "totalHours": 190.0,
+      "conferenceHours": 171.5,
       "asyncHours": 18.5,
       "sessions": [
         4.0,
@@ -3613,7 +3613,7 @@
         5.5,
         4.5,
         4.0,
-        0.0,
+        5.5,
         0.0,
         0.0
       ]
@@ -3621,8 +3621,8 @@
     {
       "sid": "S0397289",
       "pgyLevel": "PGY1",
-      "totalHours": 186.0,
-      "conferenceHours": 167.5,
+      "totalHours": 190.5,
+      "conferenceHours": 172.0,
       "asyncHours": 18.5,
       "sessions": [
         4.0,
@@ -3673,7 +3673,7 @@
         5.5,
         4.5,
         4.0,
-        0.0,
+        4.5,
         0.0,
         0.0
       ]
@@ -3733,7 +3733,7 @@
         5.5,
         4.5,
         4.0,
-        0.0,
+        "Vacation",
         0.0,
         0.0
       ]
@@ -3741,9 +3741,9 @@
     {
       "sid": "S0397323",
       "pgyLevel": "PGY1",
-      "totalHours": 169.5,
-      "conferenceHours": 152.5,
-      "asyncHours": 17.0,
+      "totalHours": 176.5,
+      "conferenceHours": 158.0,
+      "asyncHours": 18.5,
       "sessions": [
         4.0,
         5.0,
@@ -3793,7 +3793,7 @@
         5.5,
         4.5,
         "Vacation",
-        0.0,
+        5.5,
         0.0,
         0.0
       ]
@@ -3801,8 +3801,8 @@
     {
       "sid": "S0397335",
       "pgyLevel": "PGY1",
-      "totalHours": 182.5,
-      "conferenceHours": 164.0,
+      "totalHours": 188.0,
+      "conferenceHours": 169.5,
       "asyncHours": 18.5,
       "sessions": [
         4.0,
@@ -3853,7 +3853,7 @@
         4.0,
         "Vacation",
         4.0,
-        0.0,
+        5.5,
         0.0,
         0.0
       ]
